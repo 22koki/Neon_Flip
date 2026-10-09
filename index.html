@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080b1d">
+  <meta name="description" content="Neon Flip: a cinematic cyberpunk gravity-runner. Flip gravity, dodge security drones, dash through lasers, and outrun the skyline. Free browser game.">
+  <meta property="og:title" content="NEON FLIP — Rewrite Gravity">
+  <meta property="og:description" content="One runner. Three districts. Two directions of gravity. Play the neon city.">
+  <meta property="og:type" content="website">
+  <title>NEON FLIP — Rewrite Gravity</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./src/main.js"></script>
+</head>
+<body>
+  <div class="page-glow" aria-hidden="true"></div>
+  <div class="app-container">
+    <header class="site-header">
+      <a class="wordmark" href="./" aria-label="Neon Flip home">
+        <span class="wordmark-emblem" aria-hidden="true">N<span>Ξ</span></span>
+        <span class="wordmark-text">NEON<span class="wordmark-light">/</span>FLIP</span>
+      </a>
+      <div class="site-middle"><span class="live-dot"></span> INTERACTIVE EXPERIENCE <span class="divider-slash">//</span> 2089.10</div>
+      <a class="github-link" href="https://github.com/22koki/Neon_Flip" target="_blank" rel="noopener noreferrer">
+        <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .9A11.1 11.1 0 0 0 8.5 22.5c.55.1.75-.24.75-.53v-1.9c-3.07.67-3.71-1.31-3.71-1.31-.5-1.28-1.24-1.62-1.24-1.62-1.01-.7.08-.68.08-.68 1.12.08 1.71 1.15 1.71 1.15.99 1.7 2.6 1.21 3.23.93.1-.72.39-1.2.71-1.48-2.45-.28-5.02-1.23-5.02-5.47 0-1.2.43-2.19 1.14-2.96-.12-.28-.5-1.4.11-2.92 0 0 .93-.3 3.06 1.13a10.67 10.67 0 0 1 5.57 0c2.13-1.43 3.06-1.13 3.06-1.13.61 1.52.23 2.64.12 2.92.71.77 1.13 1.76 1.13 2.96 0 4.25-2.57 5.19-5.03 5.46.4.35.76 1.01.76 2.03v3.03c0 .29.2.64.76.53A11.1 11.1 0 0 0 12 .9z"/></svg>
+        VIEW SOURCE <span aria-hidden="true">↗</span>
+      </a>
+    </header>
+
+    <main>
+      <div class="prestage">
+        <p class="section-caption"><span class="caption-square"></span> PLAYABLE BUILD / 001</p>
+        <div class="prestage-right"><span class="pulse"></span> SYSTEM ONLINE <span class="separ">|</span> 60 FPS TARGET</div>
+      </div>
+
+      <section class="game-shell" id="game-shell" aria-label="Neon Flip arcade game">
+        <canvas id="game" width="1280" height="720" aria-label="Neon city side-scrolling platform game with a gravity-flipping runner" tabindex="0">
+          Your browser must support the HTML canvas element to play Neon Flip.
+        </canvas>
+
+        <div class="game-hud" aria-live="off">
+          <div class="hud-top">
+            <div class="hud-segment">
+              <div class="mini-label">CURRENT SECTOR <span id="hud-stage">01 / 03</span></div>
+              <div class="hud-big" id="hud-sector">MIDNIGHT RUN</div>
+            </div>
+            <div class="hud-figures">
+              <div class="hud-stat"><span class="mini-label">TIME</span><span id="hud-time">00:00.00</span></div>
+              <div class="hud-stat"><span class="mini-label">SHARDS</span><span class="shard-number"><span class="diamond" aria-hidden="true">◆</span><span id="hud-crystals">0</span></span></div>
+              <div class="hud-stat"><span class="mini-label">SCORE</span><span id="hud-score">0</span></div>
+            </div>
+            <button type="button" class="pause-button" data-action="pause" aria-label="Pause or resume game">Ⅱ</button>
+          </div>
+          <div class="hud-bottom">
+            <div class="vitals">
+              <span class="mini-label">BACKUP CHARGES</span>
+              <span id="hud-health" class="health-pips" aria-label="Remaining charges"></span>
+            </div>
+            <div class="run-progress"><div id="hud-progress" class="run-progress-fill"></div></div>
+            <div class="dash-meter">
+              <span class="mini-label">DASH <span id="dash-status">READY</span></span>
+              <div class="dash-track"><div id="dash-fill" class="dash-track-fill"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="toast" id="toast" aria-live="polite" role="status">
+          <span class="toast-mark" aria-hidden="true">✦</span>
+          <span class="toast-copy"><strong id="toast-heading">CHECKPOINT</strong><span id="toast-detail">Backup restored.</span></span>
+        </div>
+
+        <div class="screen intro-screen is-visible" data-screen="intro">
+          <div class="intro-noise" aria-hidden="true"></div>
+          <div class="intro-content">
+            <p class="eyebrow"><span>✦</span> WELCOME TO THE AFTERHOURS <span class="eyebrow-line"></span></p>
+            <h1 class="intro-title">NEON<br><span>FLIP<span class="title-period">.</span></span></h1>
+            <h2 class="intro-tagline">REWRITE <em>GRAVITY.</em></h2>
+            <p class="intro-description">The city's asleep. You're not. Run the rooftops, defy physics, and make it to dawn before the system catches you.</p>
+            <button class="primary-button" data-action="start" type="button"><span>INITIATE RUN</span><span class="button-arrow" aria-hidden="true">↗</span></button>
+            <div class="intro-keys" aria-label="Game controls">
+              <div class="key-row"><span class="keycap">SPACE</span><span>FLIP GRAVITY</span></div>
+              <div class="key-row"><span class="keycap">↑</span><span>JUMP</span></div>
+              <div class="key-row"><span class="keycap">SHIFT</span><span>DASH THROUGH DANGER</span></div>
+            </div>
+          </div>
+          <div class="intro-art" aria-hidden="true">
+            <div class="orbit-outer">
+              <div class="orbit-middle">
+                <div class="orbit-core"><span class="orbit-arrow">↟</span><span class="orbit-caption">GRAVITY<br>OVERRIDE</span><span class="orbit-arrow down">↡</span></div>
+              </div>
+            </div>
+            <div class="side-stamp">OBJECTIVE / ESCAPE THE SKYLINE</div>
+            <div class="floating-coord">N 00° / E 2089°</div>
+          </div>
+          <div class="intro-footer"><span>NO RULES. NO RESTRAINTS. JUST MOMENTUM.</span><span>PRESS ENTER TO START&nbsp; ↵</span></div>
+        </div>
+
+        <div class="screen result-screen" data-screen="pause">
+          <div class="result-panel">
+            <div class="result-ornament">Ⅱ</div>
+            <p class="eyebrow">SYSTEM SUSPENDED</p>
+            <h2>ON <span>HOLD.</span></h2>
+            <p>The skyline will be right here when you get back.</p>
+            <div class="result-actions">
+              <button class="primary-button" data-action="resume" type="button">RESUME RUN <span class="button-arrow">↗</span></button>
+              <button class="text-button" data-action="restart" type="button">RESTART FROM SCRATCH</button>
+            </div>
+            <div class="panel-small">PRESS P OR ESC TO RESUME</div>
+          </div>
+        </div>
+
+        <div class="screen result-screen" data-screen="gameover">
+          <div class="result-panel">
+            <div class="result-ornament fail">×</div>
+            <p class="eyebrow">CONNECTION TERMINATED / RETRY PROTOCOL</p>
+            <h2>YOU <span>FLATLINED.</span></h2>
+            <p>The city won this round. It won't win the next.</p>
+            <div class="end-stats">
+              <div><small>DISTANCE</small><strong id="fail-distance">0%</strong></div>
+              <div><small>SCORE</small><strong id="fail-score">0</strong></div>
+              <div><small>SHARDS</small><strong id="fail-crystals">0</strong></div>
+            </div>
+            <div class="result-actions"><button class="primary-button" data-action="restart" type="button">RUN IT BACK <span class="button-arrow">↗</span></button></div>
+          </div>
+        </div>
+
+        <div class="screen result-screen" data-screen="win">
+          <div class="result-panel">
+            <div class="result-ornament success">✦</div>
+            <p class="eyebrow">MISSION COMPLETE / YOU MADE IT TO DAWN</p>
+            <h2>GRAVITY <span>WHO?</span></h2>
+            <p>The entire skyline is yours. Now beat your own record.</p>
+            <span id="record-stamp" class="record-stamp" hidden>★ NEW PERSONAL BEST</span>
+            <div class="end-stats four">
+              <div><small>TOTAL SCORE</small><strong id="win-score">0</strong></div>
+              <div><small>RUN TIME</small><strong id="win-time">00:00.00</strong></div>
+              <div><small>SHARDS</small><strong id="win-crystals">0</strong></div>
+              <div><small>BEST TIME</small><strong id="win-best">00:00.00</strong></div>
+            </div>
+            <div class="result-actions"><button class="primary-button" data-action="restart" type="button">CHASE THE RECORD <span class="button-arrow">↗</span></button></div>
+          </div>
+        </div>
+
+        <div class="mobile-pad" aria-label="Touch game controls">
+          <button type="button" data-action="jump" aria-label="Jump">↑ <small>JUMP</small></button>
+          <button type="button" class="mobile-flip" data-action="flip" aria-label="Flip gravity">↕ <small>FLIP</small></button>
+          <button type="button" data-action="dash" aria-label="Dash">➜ <small>DASH</small></button>
+        </div>
+      </section>
+
+      <div class="under-game">
+        <div class="under-message">
+          <span class="status-glyph">✳</span>
+          <p><strong>GRAVITY IS OPTIONAL.</strong> Survival isn't.</p>
+        </div>
+        <button type="button" class="audio-switch" id="sound-toggle" data-action="mute" aria-label="Toggle game audio" aria-pressed="true">
+          <span aria-hidden="true">♪</span> <span id="mute-label">SOUND ON</span> <span class="switch-dot"></span>
+        </button>
+      </div>
+
+      <div class="info-grid">
+        <section class="info-card mission-card">
+          <p class="card-kicker">01 / THE MISSION</p>
+          <h2>STAY AHEAD<br>OF <span>THE SYSTEM.</span></h2>
+          <p>Outrun a city with a mind of its own. Swap ceilings for sidewalks, jump over dead ends, and phase through lasers before your backup charges run out.</p>
+          <div class="tag-list"><span>GRAVITY FLIP</span><span>SKILL-BASED</span><span>THREE DISTRICTS</span><span>NO DOWNLOAD</span></div>
+        </section>
+        <section class="info-card controls-card">
+          <p class="card-kicker">02 / OPERATOR MANUAL</p>
+          <div class="control-row"><span class="control-icon">↕</span><span><strong>FLIP GRAVITY</strong><small>Switch between ceiling and floor</small></span><kbd>SPACE / E</kbd></div>
+          <div class="control-row"><span class="control-icon">↟</span><span><strong>JUMP</strong><small>Leap from your current surface</small></span><kbd>↑ / W</kbd></div>
+          <div class="control-row"><span class="control-icon">⟶</span><span><strong>DASH</strong><small>Become untouchable for a heartbeat</small></span><kbd>SHIFT / K</kbd></div>
+          <div class="control-row"><span class="control-icon">Ⅱ</span><span><strong>PAUSE</strong><small>Take a breather; resume anytime</small></span><kbd>P / ESC</kbd></div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <span>NEON FLIP © 2089 // A CYBERPUNK ARCADE EXPERIMENT</span>
+      <span>BUILT BY <a href="https://github.com/22koki" target="_blank" rel="noopener noreferrer">@22KOKI ↗</a></span>
+      <span class="footer-power"><span class="live-dot"></span> POWERED BY JAVASCRIPT / CANVAS</span>
+    </footer>
+  </div>
+</body>
+</html>

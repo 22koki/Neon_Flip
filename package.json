@@ -1,0 +1,17 @@
+{
+  "name": "neon-flip",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Cinematic cyberpunk gravity-runner — no dependencies, playable in any modern browser.",
+  "scripts": {
+    "dev": "npx --yes serve .",
+    "test": "node --test",
+    "check": "node --check src/levels.js && node --check src/physics.js && node --check src/renderer.js && node --check src/audio.js && node --check src/main.js",
+    "ci": "npm run check && npm test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT"
+}
